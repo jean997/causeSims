@@ -1,6 +1,8 @@
 
 
 #'@title Simulate summary statistics
+#'@param snsp SNP info data frame
+#'@param evd_list List of eigen value decompositions for LD regions
 #'@param n_copies How many times to replicate chromosome 19
 #'@param n1 Sample size in study 1
 #'@param n2 sample size in study 2
@@ -14,7 +16,7 @@
 #'@param tau tau = h1*(gamma^2)/h2 Proportion of Y heritability explained by M through causal mechanism
 #'@param omega omega = h1*(eta)^2/h2 omega*q^2 is proportion of Y heritability explained by M through confounder mechanism
 #'@export
-ld_data <- function(snps, evd_list,
+sum_stats <- function(snps, evd_list,
                     n_copies = 30,
                     n1, n2, h1, h2,
                     neffect1, neffect2,
@@ -146,20 +148,11 @@ ld_data <- function(snps, evd_list,
                     keep <- sapply(seq(n_copies), function(i){
                       strt <- ((i-1)*p) + 1
                       stp <- i*p
-                      ld_prune_cormat(R, df$SNP[strt:stp], df$p_value[strt:stp],  ld_prune_pval_thresh, r2_thresh)
+                      ld_prune_cormat(R, df$snp[strt:stp], df$p_value[strt:stp],  ld_prune_pval_thresh, r2_thresh)
                     }) %>% unlist()
 
-                    keep_nold <- sapply(seq(n_copies), function(i){
-                      strt <- ((i-1)*p) + 1
-                      stp <- i*p
-                      ld_prune_cormat(R, df$SNP[strt:stp], df$p_value_nold[strt:stp],  ld_prune_pval_thresh, r2_thresh)
-                    }) %>% unlist()
-
-                    df <- df %>% mutate(ld_prune = case_when(!SNP %in% keep ~ FALSE,
-                                                                 TRUE ~ TRUE),
-                                        ld_prune_nold = case_when(!SNP %in% keep_nold ~ FALSE,
-                                                            TRUE ~ TRUE)
-                                        )
+                    df <- df %>% mutate(ld_prune = case_when(!snp %in% keep ~ FALSE,
+                                                                 TRUE ~ TRUE))
                     #cat(apply(df, 2, class))
                     return(df)
                 })

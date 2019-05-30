@@ -1,31 +1,29 @@
-library(intervals)
-library(Matrix)
 
-get_ld_gsmr <- function(dat, ix){
-    stopifnot(all(diff(ix) > 0))
-    x <- rle(dat$region_id)
-    n <- length(x$lengths)
-    starts <- cumsum(c(1, x$lengths))[seq(n)]
-    stops <- starts + x$lengths -1
-    labels <- dat$region_id[starts]
+#'@title Get LD matrix for running GSMR
+#'@export
+get_ld_gsmr <- function(dat, evd_list, p_val_thresh  = 5e-8, no_ld = FALSE){
 
-    I <- Intervals(cbind(starts, stops))
-    blocks <- unlist(interval_overlap(ix, I))
-    block_rle <- rle(blocks)
+    if(no_ld){
+      n <- with(dat, sum(p_value_nold < p_val_thresh))
+      return(diag(rep(1, n)))
+    }
 
+    #This is a data frame of all the region/replicate combos with a significant snp
+    regions <- filter(dat, p_value < p_val_thresh & ld_prune ==TRUE) %>%
+               select(region_id, rep) %>%
+               unique()
+    regions$n <- apply(regions, 1, function(x){
+      with(dat, sum(p_value < p_val_thresh & ld_prune==T & region_id == x[1] & rep == x[2]))
+    })
     ldmats <- list()
-    for(i in seq_along(block_rle$lengths)){
-        if(block_rle$lengths[i] == 1){
+    for(i in seq(nrow(regions))){
+        if(regions$n[i] == 1){
             ldmats[[i]] <- matrix(c(1), nrow=1)
         }else{
-            sr <- sum(c(1, block_rle$lengths)[seq(i)])
-            sp <- sr + block_rle$lengths[i] -1
-            bl <- labels[block_rle$values[i]]
-            vars <- dat$region_ix[ix[sr:sp]]
-            v <- readRDS(paste0("/project2/mstephens/sherlock2/chr19_EVD/th5/EVD/Q_", bl, ".RDS"))
-            d <- readRDS(paste0("/project2/mstephens/sherlock2/chr19_EVD/th5/EVD/D_", bl, ".RDS"))
-            R <- crossprod(sqrt(d)*t(v))
-            ldmats[[i]] <- R[vars, vars]
+            R <- with(evd_list[[regions$region_id[i]]],  crossprod(sqrt(values)*t(vectors)))
+            ix <- filter(dat, region_id == regions$region_id[i] & rep == regions$rep[i]) %>%
+                 with(., which(p_value < p_val_thresh & ld_prune==TRUE))
+            ldmats[[i]] <- R[ix, ix]
         }
     }
     ldrho <- as.matrix(bdiag(ldmats))
