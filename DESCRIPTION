@@ -18,5 +18,8 @@ Imports:
   cause, 
   furrr,
   future,
+  Matrix,
+  gsmr,
+  MRPRESSO,
   RcppZiggurat
 RoxygenNote: 6.1.0
