@@ -9,7 +9,7 @@
 #'@param h1 Expected heritability of trait 1
 #'@param h2 Expected heritability of trait 2
 #'@param neffect1 Average number of trait 1 effect snps
-#'@param neffect2 Average number of trait 2 effect snps
+#'@param neffect2 Average number of trait 2 effect snps. Note that this is in addition to SNPs that effect Y through M.
 #'@param gamma gamma
 #'@param eta eta
 #'@param q q

@@ -4,13 +4,11 @@
 \alias{cause_sims}
 \title{Run CAUSE on simulated data}
 \usage{
-cause_sims(dat, params, sigma_g, qalpha = 1, qbeta = 10,
+cause_sims(dat, param_ests, sigma_g, qalpha = 1, qbeta = 10,
   no_ld = FALSE, thresh = 0.001)
 }
 \arguments{
 \item{dat}{A simulated data frame created with sum_stats}
-
-\item{params}{A cause params object. You can make this with cause_params_sims}
 
 \item{sigma_g}{Prior variance for gamma and eta. If left missing will be estimated.}
 
@@ -19,6 +17,8 @@ cause_sims(dat, params, sigma_g, qalpha = 1, qbeta = 10,
 \item{no_ld}{Run with the nold data (T/F)}
 
 \item{thresh}{p-value threshold}
+
+\item{params}{A cause params object. You can make this with cause_params_sims}
 }
 \description{
 Run CAUSE on simulated data

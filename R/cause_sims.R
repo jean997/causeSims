@@ -7,23 +7,25 @@
 #'@param no_ld Run with the nold data (T/F)
 #'@param thresh p-value threshold
 #'@export
-cause_sims <- function(dat, params, sigma_g, qalpha=1, qbeta=10,
+cause_sims <- function(dat, param_ests, sigma_g, qalpha=1, qbeta=10,
                          no_ld = FALSE,
                          thresh = 1e-3){
 
   if(no_ld) dat <- process_dat_nold(dat)
-    vars <- filter(dat, ld_prune == TRUE & p_value < thresh) %>% with(., snp)
-    X <- new_cause_data(dat)
 
-    #get sigma_g from data
-    if(missing(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
-    if(is.na(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
+  vars <- filter(dat, ld_prune == TRUE & p_value < thresh) %>% with(., snp)
+  X <- new_cause_data(dat)
 
-    res <- cause(X=X, variants = vars, param_ests = params, sigma_g = sigma_g, qalpha = qalpha, qbeta = qbeta, force=TRUE)
-    return(res)
+  #get sigma_g from data
+  if(missing(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
+  if(is.na(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
+
+  res <- cause::cause(X=X, variants = vars, param_ests = param_ests, sigma_g = sigma_g,
+               qalpha = qalpha, qbeta = qbeta, force=TRUE)
+  return(res)
 }
 
-
+#'@export
 get_sigma <- function(effect, q){
     if(is.na(q) | q == -1) return(NA)
     fct <- function(s, q){
