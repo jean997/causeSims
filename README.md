@@ -27,6 +27,7 @@ Please use `mixsqp-0.1-97` which is currently the version on CRAN.
 ## Generate a data set 
 
 We are using some LD data that can be downloaded [here.](https://zenodo.org/record/3235780)
+We recomend putting these files in a directory called `data`. This will make it easy to run this example and also to run more simulations using the DSC file in this repository.
 The data consist of a data frame with snp information. This data frame has at least these three columns
 
 + AF allele frequency
