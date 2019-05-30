@@ -1,0 +1,22 @@
+Package: causeSims
+Type: Package
+Title: Generate Summary Statistic Data and Analyze with a Variety of MR Methods
+Version: 0.1.0
+Author: Jean Morrison
+Maintainer: Jean Morrison <jeanm@uchicago.edu>
+Description: This package is built to run simulations described in Morrison et al (2019) (citation TBD). You can use it to generate pairs of summary statistics for testing summary statistic based MR methods.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: false
+URL: http://github.com/jean997/causeSims
+BugReports: http://github.com/jean997/causeSims/issues
+Imports: 
+  dplyr,
+  readr,
+  ashr,
+  mixsqp, 
+  cause, 
+  furrr,
+  future,
+  RcppZiggurat
+RoxygenNote: 6.1.0
