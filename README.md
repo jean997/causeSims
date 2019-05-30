@@ -1,10 +1,10 @@
 causeSims: A package to help with simulating summary statistic data and testing MR methods
 ======
 
-Quick start 
 
 
-To install:
+## Installation 
+
 ```{r}
 devtools::install_github("jean997/causeSims")
 ```
@@ -24,8 +24,9 @@ sudo apt-get install libgsl-dev
 Please use `mixsqp-0.1-97` which is currently the version on CRAN. 
 
 
+## Generate a data set 
 
-Generate a data set: We are using some LD data that will be available soon. 
+We are using some LD data that can be downloaded [here.](https://zenodo.org/record/3235780)
 The data consist of a data frame with snp information. This data frame has at least these three columns
 
 + AF allele frequency
@@ -55,6 +56,8 @@ dat <- sum_stats(snps, evd_list,
 dim(dat)
 #[1] 584700     19
 ```
+
+## Run some MR methods
 
 Now you can analyze the data set with many methods that have wrappers built into the package. The data we just produced contains
 summary statistics generated both with and without LD. To run the no LD version, use the option `no_ld = TRUE` in all of the wrappers below.
@@ -103,4 +106,9 @@ pwm_res <- pweighted_median(dat, p_val_thresh=5e-8, no_ld = FALSE)
 
 ```
 
+## Use DSC to run many simulations
+
+We have included a dsc file that can be used to run lots of simulations experimenting with parameters.
+
+[Learn more about DSC here.](https://stephenslab.github.io/dsc-wiki/overview)
 
