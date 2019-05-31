@@ -100,7 +100,7 @@ sum_stats <- function(snps, evd_list,
                     ld_z1 <- apply(b1, 2, function(x){
                                sqrt(n1)* (R %*% x)})
                     ld_z2 <- apply(b2, 2, function(x){
-                      sqrt(n2)* (R %*% x)})
+                               sqrt(n2)* (R %*% x)})
 
                     z_hat_1 <- apply(ld_z1, 2, function(x){
                       mvrnorm_eig1(n=1, mu=x, eS=evd_list[[r]])
@@ -130,7 +130,7 @@ sum_stats <- function(snps, evd_list,
 
                     ### Make also some no ld data with the same effects
                     df$beta_hat_1_nold <- with(df, rnorm(n=nrow(df), mean = b1, sd = seb1))
-                    df$beta_hat_2_nold <- with(df, rnorm(n=nrow(df), mean = b1, sd = seb2))
+                    df$beta_hat_2_nold <- with(df, rnorm(n=nrow(df), mean = b2, sd = seb2))
 
 
                     # add snp data
