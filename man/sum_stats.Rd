@@ -23,7 +23,7 @@ sum_stats(snps, evd_list, n_copies = 30, n1, n2, h1, h2, neffect1,
 
 \item{neffect1}{Average number of trait 1 effect snps}
 
-\item{neffect2}{Average number of trait 2 effect snps}
+\item{neffect2}{Average number of trait 2 effect snps. Note that this is in addition to SNPs that effect Y through M.}
 
 \item{gamma}{gamma}
 
