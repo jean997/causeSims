@@ -24,6 +24,28 @@ ivw <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
     return(R)
 }
 
+#This is from Bowden 2017 28114746
+#'@export
+ivw_re <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
+  if(no_ld) dat <- process_dat_nold(dat)
+  dat <- dat %>% filter(p_value < p_val_thresh & ld_prune == TRUE)
+  if(nrow(dat) < 2){
+    R <- list("z"=NA, "p" = NA)
+    return(R)
+  }
+  b_hat_ivw <- as.numeric(f1$coefficients)
+  b_hat_j <- with(dat, beta_hat_2/beta_hat_1)
+  w_j <- with(dat, beta_hat_1^2/(seb2^2))
+  b_hat_ivw <- (sum(w_j*b_hat_j))/sum(w_j)
+  Q <- with(dat, sum(w_j*(b_hat_j - b_hat_ivw)^2))
+  phi_hat <- Q/(nrow(dat)-1)
+  var_b_hat_ivw <- phi_hat/sum(w_j)
+  z <- b_hat_ivw/sqrt(var_b_hat_ivw)
+  p <- pt(-z, df = nrow(dat)-1)
+  R <- list(z = z, p = p)
+  return(R)
+}
+
 #'@export
 egger <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
     if(no_ld) dat <- process_dat_nold(dat)
