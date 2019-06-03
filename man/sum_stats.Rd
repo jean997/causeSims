@@ -9,6 +9,8 @@ sum_stats(snps, evd_list, n_copies = 30, n1, n2, h1, h2, neffect1,
   ld_prune_pval_thresh = 0.001, r2_thresh = 0.1)
 }
 \arguments{
+\item{snps}{SNP info data frame}
+
 \item{evd_list}{List of eigen value decompositions for LD regions}
 
 \item{n_copies}{How many times to replicate chromosome 19}
@@ -34,8 +36,6 @@ sum_stats(snps, evd_list, n_copies = 30, n1, n2, h1, h2, neffect1,
 \item{tau}{tau = h1*(gamma^2)/h2 Proportion of Y heritability explained by M through causal mechanism}
 
 \item{omega}{omega = h1*(eta)^2/h2 omega*q^2 is proportion of Y heritability explained by M through confounder mechanism}
-
-\item{snsp}{SNP info data frame}
 }
 \description{
 Simulate summary statistics

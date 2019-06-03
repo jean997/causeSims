@@ -1,7 +1,7 @@
 
 
 #'@title Simulate summary statistics
-#'@param snsp SNP info data frame
+#'@param snps SNP info data frame
 #'@param evd_list List of eigen value decompositions for LD regions
 #'@param n_copies How many times to replicate chromosome 19
 #'@param n1 Sample size in study 1
