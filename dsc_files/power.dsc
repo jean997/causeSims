@@ -1,4 +1,3 @@
-#nohup dsc --replicate 100 --host config-broadwl.yml -c 4 pwr.dsc > pwr_dsc.out &
 
 DSC:
     define:
@@ -7,9 +6,8 @@ DSC:
          simulate*LCV,
          simulate*mr,
          simulate*cause_params*cause
-    replicate: 20
-    output: pwr
-    exec_path: R
+    replicate: 100
+    output: fp
 
 
 ######## Simulate
@@ -24,6 +22,7 @@ simulate: R(library(causeSims);
                   tau = tau, omega = omega, q = q,
                   cores = 4, ld_prune_pval_thresh = 0.01,
                   r2_thresh = 0.1))
+
      q: 0
      omega: 0
      tau: 0, 0.01, 0.02, 0.03, 0.04, 0.05
@@ -33,7 +32,7 @@ simulate: R(library(causeSims);
      neffect2: 1000
      h1: 0.25
      h2: 0.25
-     $sim_params: c(q=q, omega=omega, tau=tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
+     $sim_params: c(q = q, omega = omega, tau = tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
      $dat: dat
 
 
@@ -52,7 +51,7 @@ gw_sig: R(library(causeSims);
           h2 <- as.numeric(params["h2"]);
           neffect1 <- as.numeric(params["neffect1"]);
           neffect2 <- as.numeric(params["neffect2"]);
-          gamma <- sqrt(tau*sum(h2)/sum(h1));
+          gamma <- sqrt(tau*sum(h2)/sum(h1))*sign(tau);
           eta <- sqrt(abs(omega)*sum(h2)/sum(h1))*sign(omega);
 
           #LCV parameters
@@ -141,14 +140,6 @@ mrp: R(library(causeSims);
     $z: res$z
     $p: res$p
 
-twas: R(library(causeSims);
-       res <- twas($(dat), p_val_thresh=thresh, no_ld = no_ld);
-       )
-    thresh: 5e-8
-    no_ld: FALSE
-    $z: res$z
-    $p: res$p
-
 wm: R(library(causeSims);
        res <- weighted_median($(dat), p_val_thresh=thresh, no_ld = no_ld);
        )
@@ -159,12 +150,7 @@ wm: R(library(causeSims);
 
 gsmr: R(library(causeSims);
         evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
-        n <- with($(dat), sum(p_value < 5e-8));
-        if(n < 3){
-            res <- NULL;
-        }else{
-            res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
-        };
+        res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
         if(!is.null(res)){
            z <- res$bxy/res$bxy_se;
            est <- res$bxy;

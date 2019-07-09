@@ -1,15 +1,13 @@
-#nohup dsc --replicate 100 --host config-broadwl.yml -c 4 false_positives.dsc > fp_dsc.out &
 
 DSC:
     define:
-        mr: ivw, egger, mrp, wm, twas, wm, gsmr
+        mr: ivw, egger, mrp, wm, wm, gsmr
     run: simulate*gw_sig,
          simulate*LCV,
          simulate*mr,
          simulate*cause_params*cause
-    replicate: 20
+    replicate: 100
     output: fp
-    exec_path: R
 
 
 ######## Simulate
@@ -53,7 +51,7 @@ gw_sig: R(library(causeSims);
           h2 <- as.numeric(params["h2"]);
           neffect1 <- as.numeric(params["neffect1"]);
           neffect2 <- as.numeric(params["neffect2"]);
-          gamma <- sqrt(tau*sum(h2)/sum(h1));
+          gamma <- sqrt(tau*sum(h2)/sum(h1))*sign(tau);
           eta <- sqrt(abs(omega)*sum(h2)/sum(h1))*sign(omega);
 
           #LCV parameters
@@ -142,14 +140,6 @@ mrp: R(library(causeSims);
     $z: res$z
     $p: res$p
 
-twas: R(library(causeSims);
-       res <- twas($(dat), p_val_thresh=thresh, no_ld = no_ld);
-       )
-    thresh: 5e-8
-    no_ld: FALSE
-    $z: res$z
-    $p: res$p
-
 wm: R(library(causeSims);
        res <- weighted_median($(dat), p_val_thresh=thresh, no_ld = no_ld);
        )
@@ -160,12 +150,7 @@ wm: R(library(causeSims);
 
 gsmr: R(library(causeSims);
         evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
-        n <- with($(dat), sum(p_value < 5e-8));
-        if(n < 3){
-            res <- NULL;
-        }else{
-            res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
-        };
+        res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
         if(!is.null(res)){
            z <- res$bxy/res$bxy_se;
            est <- res$bxy;
@@ -191,7 +176,7 @@ LCV: R(library(causeSims);
     thresh: 30
     no_ld: FALSE
     $p: res$pval.gcpzero.2tailed
-    $gcp_med: res$gcp.pm
+    $gcp_mean: res$gcp.pm
     $gcp_pse: res$gcp.pse
     $gcp_obj: res
 
