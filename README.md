@@ -109,7 +109,5 @@ pwm_res <- pweighted_median(dat, p_val_thresh=5e-8, no_ld = FALSE)
 
 ## Use DSC to run many simulations
 
-We have included a dsc file that can be used to run lots of simulations experimenting with parameters.
-
-[Learn more about DSC here.](https://stephenslab.github.io/dsc-wiki/overview)
+We have included a two dsc files in the `dsc_files` subdirectory of this repository. These can be used to run lots of simulations experimenting with parameters. You can find more instructions on doing this [here](https://jean997.github.io/cause/simulations.html). 
 
