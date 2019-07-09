@@ -61,7 +61,7 @@ dim(dat)
 ## Run some MR methods
 
 Now you can analyze the data set with many methods that have wrappers built into the package. The data we just produced contains
-summary statistics generated both with and without LD. To run the no LD version, use the option `no_ld = TRUE` in all of the wrappers below.
+summary statistics generated both with and without LD. To run the no LD version, use the option `no_ld = TRUE` in all of the wrappers below. All of the analysis wrappers in `causeSims` are very simple so looking at the code may be the fastest way to clear up any questions about what they are doing. We have written them only to facilitate easily analyzing simulated data and switching between the data generated with and without LD. 
 
 CAUSE. This takes about 4 minutes for parameter estimation and 45 seconds for model fitting (for one data set on Jean's laptop). 
 We do these steps separately to facilitate experimenting with parameters.
@@ -109,5 +109,5 @@ pwm_res <- pweighted_median(dat, p_val_thresh=5e-8, no_ld = FALSE)
 
 ## Use DSC to run many simulations
 
-We have included a two dsc files in the `dsc_files` subdirectory of this repository. These can be used to run lots of simulations experimenting with parameters. You can find more instructions on doing this [here](https://jean997.github.io/cause/simulations.html). 
+We have included two dsc files in the `dsc_files` subdirectory of this repository. These can be used to run lots of simulations experimenting with parameters. You can find more instructions on doing this [here](https://jean997.github.io/cause/simulations.html). 
 
