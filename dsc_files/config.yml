@@ -1,0 +1,56 @@
+DSC:
+    midway2:
+        description: UChicago RCC cluster Midway 2
+        address: localhost
+        paths:
+            home: /home/jeanm
+        queue_type: pbs
+        status_check_interval: 120
+        max_running_jobs: 50 
+        max_cores: 20
+        max_mem: 57G
+        job_template: |
+            #!/bin/bash
+            #SBATCH --time=6:00:00
+            #{partition}
+            #{account}
+            #SBATCH --cpus-per-task={cores}
+            #SBATCH --mem-per-cpu={mem//10**9}G
+            #SBATCH --job-name={job_name}
+            #SBATCH --output={cur_dir}/{job_name}.out
+            #SBATCH --error={cur_dir}/{job_name}.err
+            cd {cur_dir}
+            module load R
+        partition: "SBATCH --partition=broadwl"
+        account: "SBATCH --account pi-xinhe"
+        submit_cmd: sbatch {job_file}
+        submit_cmd_output: "Submitted batch job {job_id}"
+        status_cmd: squeue --job {job_id}
+        kill_cmd: scancel {job_id}
+
+default:
+    queue: midway2
+    instances_per_job: 30
+    n_cpu: 1
+    mem_per_cpu: 2G
+
+simulate:
+    instances_per_job: 30
+    n_cpu: 4
+    mem_per_cpu: 10G
+
+cause:
+    instances_per_job: 30 
+    n_cpu: 8
+    mem_per_cpu: 5G
+
+cause_params:
+    instances_per_job: 10
+    n_cpu: 8
+    mem_per_cpu: 5G
+
+mr:
+    instances_per_job: 40
+    n_cpu: 1
+    mem_per_cpu: 5G
+
