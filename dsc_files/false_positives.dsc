@@ -16,8 +16,6 @@ DSC:
 simulate: R(library(causeSims);
             snps <- readRDS("data/chr19_snpdata_hm3only.RDS");
             evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
-            neffect1 <- effects[1];
-            neffect2 <- effects[2];
             dat <- sum_stats(snps, evd_list,
                   n_copies = 30,
                   n1 = n1, n2=n2,
@@ -32,15 +30,14 @@ simulate: R(library(causeSims);
      tau: 0
      n1: 12000, 40000
      n2: 12000, 40000
-     effects: c(1000, 1000)
+     neffect1: 1000
+     neffect2: 1000
      h1: 0.25
      h2: 0.25
      $sim_params: c(q = q, omega = omega, tau = tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
      $dat: dat
 
 
-# Count how many variants are genome-wide significant for M. Also collect parameters,
-# it will be faster to get them from this module than from simulate because the objects are smaller
 # Count how many variants are genome-wide significant for M. Also collect parameters,
 # it will be faster to get them from this module than from simulate because the objects are smaller
 gw_sig: R(library(causeSims);
@@ -101,7 +98,6 @@ gw_sig: R(library(causeSims);
 cause_params: R(library(causeSims);
                 p1 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
                 )
-                #p2 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=TRUE))
     null_wt: 10
     $cause_params_ld: p1
 
@@ -170,7 +166,6 @@ gsmr: R(library(causeSims);
         }else{
             res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
         };
-        res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
         if(!is.null(res)){
            z <- res$bxy/res$bxy_se;
            est <- res$bxy;

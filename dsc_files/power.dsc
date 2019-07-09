@@ -16,37 +16,27 @@ DSC:
 simulate: R(library(causeSims);
             snps <- readRDS("data/chr19_snpdata_hm3only.RDS");
             evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
-            neffect1 <- effects[1];
-            neffect2 <- effects[2];
             dat <- sum_stats(snps, evd_list,
                   n_copies = 30,
                   n1 = n1, n2=n2,
                   h1=h1, h2=h1,
                   neffect1 = neffect1, neffect2 = neffect2,
-                  tau = qot["tau"], omega = qot["omega"], q = qot["q"],
+                  tau = tau, omega = omega, q = q,
                   cores = 4, ld_prune_pval_thresh = 0.01,
                   r2_thresh = 0.1))
-
-     qot: c(q = 0, omega = 0, tau = 0),
-         #c(q = 0, omega = 0, tau = 0.005),
-         c(q = 0, omega = 0, tau = 0.01),
-         #c(q = 0, omega = 0, tau = 0.015),
-         c(q = 0, omega = 0, tau = 0.02),
-         c(q = 0, omega = 0, tau = 0.03),
-         c(q = 0, omega = 0, tau = 0.04),
-         c(q = 0, omega = 0, tau = 0.05)
-         #c(q = 0, omega = 0, tau = 0.06)
+     q: 0
+     omega: 0
+     tau: 0, 0.01, 0.02, 0.03, 0.04, 0.05
      n1: 12000, 40000
      n2: 12000, 40000
-     effects: c(1000, 1000)
+     neffect1: 1000
+     neffect2: 1000
      h1: 0.25
      h2: 0.25
-     $sim_params: c(qot,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
+     $sim_params: c(q=q, omega=omega, tau=tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
      $dat: dat
 
 
-# Count how many variants are genome-wide significant for M. Also collect parameters,
-# it will be faster to get them from this module than from simulate because the objects are smaller
 # Count how many variants are genome-wide significant for M. Also collect parameters,
 # it will be faster to get them from this module than from simulate because the objects are smaller
 gw_sig: R(library(causeSims);
@@ -200,7 +190,7 @@ LCV: R(library(causeSims);
     thresh: 30
     no_ld: FALSE
     $p: res$pval.gcpzero.2tailed
-    $gcp_med: res$gcp.pm
+    $gcp_mean: res$gcp.pm
     $gcp_pse: res$gcp.pse
     $gcp_obj: res
 
