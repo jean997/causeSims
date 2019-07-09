@@ -8,6 +8,8 @@ get_ld_gsmr <- function(dat, evd_list, p_val_thresh  = 5e-8, no_ld = FALSE){
       return(diag(rep(1, n)))
     }
 
+    ix <- with(dat, which(p_value < p_val_thresh & ld_prune == TRUE))
+    if(length(ix) < 1) return(NULL)
     #This is a data frame of all the region/replicate combos with a significant snp
     regions <- filter(dat, p_value < p_val_thresh & ld_prune ==TRUE) %>%
                select(region_id, rep) %>%
