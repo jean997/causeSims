@@ -5,6 +5,7 @@
 #'experiments using DSC using the commands
 #'
 #'  nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc > pwr_dsc.out &
+#'
 #'  nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp_dsc.out &
 #'
 #'  You will need to modify the config.yml file to work with your compute cluster.
