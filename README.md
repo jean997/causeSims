@@ -15,7 +15,7 @@ You will need to install these R packages manually following the instructions in
 + gsmr (http://cnsgenomics.com/software/gsmr/)
 + MR-PRESSO (https://github.com/rondolab/MR-PRESSO)
 
-`causeSims` has other dependencies that should install automattically.
+`causeSims` has other dependencies that should install automatically.
 If you have trouble installing `RcppZiggurat` you may need to install GSL. On Linux use
 
 ```
@@ -26,8 +26,16 @@ Please make sure you are using `mixsqp-0.1-97` which is currently the version on
 
 ## Generate a data set 
 
-The main data simulation function, `sum_stats` generates a data frame containing GWAS summary statistics for two traits. Data are simulated using LD information that must be provided by the user. We use LD estimates from the 1000 Genomes CEU population on chromosome 19. These can be downloaded [here.](https://zenodo.org/record/3235780)
-We recomend putting the two files in a directory called `data`. This will make it easy to run this example and also to run more simulations using the DSC file in this repository.
+The main data simulation function, `sum_stats` generates a data frame containing GWAS summary statistics for two traits. Data are simulated using LD information that must be provided by the user. We use LD estimates from the 1000 Genomes CEU population on chromosome 19. These can be downloaded [here](https://zenodo.org/record/3235780) or with the following R commands
+
+```
+if(!dir.exists("data/")) system("mkdir data")
+cat("Downloading LD Data\n")
+download.file(url="https://zenodo.org/record/3235780/files/chr19_snpdata_hm3only.RDS?download=1", destfile = "data/chr19_snpdata_hm3only.RDS")
+download.file(url="https://zenodo.org/record/3235780/files/evd_list_chr19_hm3.RDS?download=1", destfile="data/evd_list_chr19_hm3.RDS")
+```
+
+We recomend putting the two files in a directory called `data` (the R commands above do this for you). This will make it easy to run this example and also to run more simulations using the DSC file in this repository. 
 
 LD data is passed to `sum_stats` as two objects. The first, `snps` is a data frame with variant information. The data frame must have at least these three columns with the following names:
 
