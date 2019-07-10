@@ -12,8 +12,8 @@
 setup_sims <- function(){
   #Download DSC files
   cat("Downloading DSC files\n")
-  download.file(url = "https://github.com/jean997/causeSims/blob/master/dsc_files/power.dsc" , destfile="power.dsc")
-  download.file(url = "https://github.com/jean997/causeSims/blob/master/dsc_files/false_positives.dsc" , destfile="false_positives.dsc")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/power.dsc" , destfile="power.dsc")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/false_positives.dsc" , destfile="false_positives.dsc")
 
   #Download data
   if(!dir.exists("data/")) system("mkdir data")
@@ -22,5 +22,5 @@ setup_sims <- function(){
   download.file(url="https://zenodo.org/record/3235780/files/evd_list_chr19_hm3.RDS?download=1", destfile="data/evd_list_chr19_hm3.RDS")
 
   cat("Downloading config file. You will need to modify this for your setup\n")
-  download.file(url="https://github.com/jean997/causeSims/blob/master/dsc_files/config.yml", destfile="config.yml")
+  download.file(url="https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/config.yml", destfile="config.yml")
 }
