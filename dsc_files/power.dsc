@@ -7,7 +7,7 @@ DSC:
          simulate*mr,
          simulate*cause_params*cause
     replicate: 100
-    output: fp
+    output: pwr
 
 
 ######## Simulate
