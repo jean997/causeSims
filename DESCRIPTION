@@ -10,7 +10,7 @@ Encoding: UTF-8
 LazyData: false
 URL: http://github.com/jean997/causeSims
 BugReports: http://github.com/jean997/causeSims/issues
-Remotes: github::rondolab/MR-PRESSO,url::http://cnsgenomics.com/software/gsmr/static/gsmr_1.0.9.tar.gz
+Remotes: git::git@github.com:rondolab/MR-PRESSO.git,url::http://cnsgenomics.com/software/gsmr/static/gsmr_1.0.9.tar.gz
 Imports: 
   dplyr,
   readr,
