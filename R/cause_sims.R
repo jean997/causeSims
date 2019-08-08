@@ -17,8 +17,8 @@ cause_sims <- function(dat, param_ests, sigma_g, qalpha=1, qbeta=10,
   X <- new_cause_data(dat)
 
   #get sigma_g from data
-  if(missing(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
-  if(is.na(sigma_g)) sigma_g <- eta_gamma_prior(X, vars)
+  if(missing(sigma_g)) sigma_g <- cause:::eta_gamma_prior(X, vars)
+  if(is.na(sigma_g)) sigma_g <- cause:::eta_gamma_prior(X, vars)
 
   res <- cause::cause(X=X, variants = vars, param_ests = param_ests, sigma_g = sigma_g,
                qalpha = qalpha, qbeta = qbeta, force=TRUE)
