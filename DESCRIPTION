@@ -14,10 +14,13 @@ Remotes: github::rondolab/MR-PRESSO,url::http://cnsgenomics.com/software/gsmr/st
 Imports: 
   dplyr,
   readr,
+  cause,
   ashr,
   mixsqp, 
   furrr,
   future,
   Matrix,
-  RcppZiggurat
+  RcppZiggurat,
+  MRPRESSO,
+  gsmr
 RoxygenNote: 6.1.1
