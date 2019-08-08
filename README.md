@@ -5,24 +5,25 @@ causeSims: A package to help with simulating summary statistic data and testing 
 
 ## Installation 
 
+Install from github: 
+
 ```{r}
 devtools::install_github("jean997/causeSims")
 ```
 
-You will need to install these R packages manually following the instructions in the links provided. 
-
-+ CAUSE (http://github.com/jean997/cause) 
-+ gsmr (http://cnsgenomics.com/software/gsmr/)
-+ MR-PRESSO (https://github.com/rondolab/MR-PRESSO)
-
-`causeSims` has other dependencies that should install automatically.
-If you have trouble installing `RcppZiggurat` you may need to install GSL. On Linux use
+If you have errors installing the dependency `RcppZiggurat` you may need to install GSL. On Linux use
 
 ```
 sudo apt-get install libgsl-dev
 ```
 Please make sure you are using `mixsqp-0.1-97` which is currently the version on CRAN, rather than the development version. 
 
+
+We run simulations using [DSC](https://stephenslab.github.io/dsc-wiki/overview). This is not required for using `causeSims` but if you would like to use it you will also need to install DSC and the `dscrutils` R package.
+```{r}
+devtools::install_github("stephenslab/dsc",subdir = "dscrutils",
+                        force = TRUE)
+```
 
 ## Generate a data set 
 
