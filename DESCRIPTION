@@ -21,6 +21,6 @@ Imports:
   future,
   Matrix,
   RcppZiggurat,
-  MR-PRESSO,
+  MRPRESSO,
   gsmr
 RoxygenNote: 6.1.1
