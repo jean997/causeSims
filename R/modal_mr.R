@@ -1,12 +1,14 @@
 
 #'@title Modal MR
+#'@description Implementation of the Modal MR method from Hartwig et al 2017.
+#'This code is copied from the supplement of that paper.
 #'@param BetaXG vector of instrument-exposure regression coefficients
 #'@param BetaYG vector of instrument-outcome regression coefficients
 #'@param seBetaXG vector of instrument-exposure standard errors (SEs)
 #'@param seBetaYG vector of instrument-outcome SEs
 #'@param phi tunning parameter (e.g., 1=default bandwidth; 0.5=half of the default bandwidth)
 #'@param n_boot number of bootstrap iterations
-#'@param alpha alpha level of the confidence intervals (e.g., alpha=0.05 corresponds to 1-0.05=95% confidence intervals)
+#'@param alpha alpha level of the confidence intervals (e.g., alpha=0.05 corresponds to 1-0.05=95\% confidence intervals)
 #'@export
 MBE <- function(BetaXG, BetaYG, seBetaXG, seBetaYG, phi=c(1,0.5,0.25), n_boot=1e4, alpha=0.05) {
 

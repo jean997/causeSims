@@ -20,8 +20,9 @@ MBE(BetaXG, BetaYG, seBetaXG, seBetaYG, phi = c(1, 0.5, 0.25),
 
 \item{n_boot}{number of bootstrap iterations}
 
-\item{alpha}{alpha level of the confidence intervals (e.g., alpha=0.05 corresponds to 1-0.05=95% confidence intervals)}
+\item{alpha}{alpha level of the confidence intervals (e.g., alpha=0.05 corresponds to 1-0.05=95\% confidence intervals)}
 }
 \description{
-Modal MR
+Implementation of the Modal MR method from Hartwig et al 2017.
+This code is copied from the supplement of that paper.
 }
