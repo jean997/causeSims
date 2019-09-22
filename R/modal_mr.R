@@ -1,7 +1,6 @@
 
 #'@title Modal MR
-#'@description Implementation of the Modal MR method from Hartwig et al 2017.
-#'This code is copied from the supplement of that paper.
+#'@description Implementation of the Modal MR method from Hartwig et al 2017. This code is copied from the supplement of that paper.
 #'@param BetaXG vector of instrument-exposure regression coefficients
 #'@param BetaYG vector of instrument-outcome regression coefficients
 #'@param seBetaXG vector of instrument-exposure standard errors (SEs)
