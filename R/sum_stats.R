@@ -86,9 +86,6 @@ sum_stats <- function(snps, evd_list,
                     sd=c(0, sigma_2))
 
     dat <- future_map_dfr(region_ids, function(r){
-    #dflist <- lapply(region_ids, function(r){
-    #dat <- future_map(region_ids, function(r){
-                    #evd <- readRDS(paste0("data/EVD_hapmap_only/EVD_", r, ".RDS"))
                     R <- with(evd_list[[r]], crossprod(sqrt(values)*t(vectors)))
 
                     p <- sum(snps$region_id==r)
