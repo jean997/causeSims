@@ -32,4 +32,5 @@ reverse_data <- function(dat, evd_list, ld_prune_pval_thresh = 1e-3, r2_thresh =
     stp <- max(which(dat$region_id==r ))
     dat$ld_prune[strt:stp] <- dat$snp[strt:stp] %in% keep
   }
+  return(dat)
 }
