@@ -46,7 +46,7 @@
 #'@param   n1 sample size for trait 1, only needed if ldsc.intercept=1;
 #'@param   n2 sample size for trait 2, only needed if ldsc.intercept=1;
 #'@param	intercept.12 covariance between sampling errors for Z1 and Z2, only needed if
-#'@param  crosstrait_intercept If the 2 GWAS are disjoint, this can be set to zero.
+#' crosstrait_intercept=0 If the 2 GWAS are disjoint, this can be set to zero.
 #'@export
 RunLCV <- function(ell,z.1,z.2,no.blocks=100,crosstrait.intercept=1,ldsc.intercept=1,weights=1/pmax(1,ell),
                    sig.threshold=.Machine$integer.max,n.1=1,n.2=1,intercept.12=0){
@@ -62,7 +62,6 @@ RunLCV <- function(ell,z.1,z.2,no.blocks=100,crosstrait.intercept=1,ldsc.interce
   size.blocks=floor(mm/no.blocks)
   jackknife=matrix(0,no.blocks,8)
   for(jk in 1:no.blocks){
-    #cat(jk, "\n")
     if(jk==1)
     {ind<-(size.blocks+1):mm}
     else if(jk==no.blocks)
@@ -124,7 +123,7 @@ RunLCV <- function(ell,z.1,z.2,no.blocks=100,crosstrait.intercept=1,ldsc.interce
   }
 
   lcv.output<-list(zscore=zscore,pval.gcpzero.2tailed=pval.gcpzero.2tailed,gcp.pm=gcp.pm,gcp.pse=gcp.pse,rho.est=rho.est,rho.err=rho.err,
-                         pval.fullycausal=c(pval.fullycausal.1,pval.fullycausal.2),h2.zscore=c(h2.zscore.1,h2.zscore.2))
+                   pval.fullycausal=c(pval.fullycausal.1,pval.fullycausal.2),h2.zscore=c(h2.zscore.1,h2.zscore.2))
 
   return(lcv.output)
 
