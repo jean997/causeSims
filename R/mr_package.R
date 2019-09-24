@@ -3,7 +3,7 @@
 ivw_re_nonome_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
   if(no_ld) dat <- process_dat_nold(dat)
   dat <- dat %>% filter(p_value < p_val_thresh & ld_prune == TRUE)
-  if(nrow(dat) < 2){
+  if(nrow(dat) < 1){
     R <- list("z"=NA, "p" = NA)
     return(R)
   }
@@ -19,7 +19,7 @@ ivw_re_nonome_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
 egger_re_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
   if(no_ld) dat <- process_dat_nold(dat)
   dat <- dat %>% filter(p_value < p_val_thresh & ld_prune == TRUE)
-  if(nrow(dat) < 2){
+  if(nrow(dat) < 3){
     R <- list("z"=NA, "p" = NA)
     return(R)
   }
@@ -35,7 +35,7 @@ egger_re_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
 wtd_median_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
   if(no_ld) dat <- process_dat_nold(dat)
   dat <- dat %>% filter(p_value < p_val_thresh & ld_prune == TRUE)
-  if(nrow(dat) < 2){
+  if(nrow(dat) < 3){
     R <- list("z"=NA, "p" = NA)
     return(R)
   }
@@ -52,7 +52,7 @@ mbe_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE,
                    weighting="weighted", no_NOME=TRUE, phi=1){
   if(no_ld) dat <- process_dat_nold(dat)
   dat <- dat %>% filter(p_value < p_val_thresh & ld_prune == TRUE)
-  if(nrow(dat) < 2){
+  if(nrow(dat) < 3){
     R <- list("z"=NA, "p" = NA)
     return(R)
   }
