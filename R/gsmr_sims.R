@@ -18,10 +18,12 @@ gsmr_sims <- function(dat, evd_list, p_val_thresh  = 5e-8, no_ld = FALSE){
     names(ldrho) <- seq_along(ix)
     rownames(ldrho) <- seq_along(ix)
 
-    dat <- dat[ix,]
+    dat <- dat[ix,] %>%
+           mutate(p_value2 = 2*pnorm(-abs(beta_hat_2/seb2)))
 
     res <-  try(with(dat, gsmr(beta_hat_1, seb1, p_value,
-                           beta_hat_2, seb2, ldrho=ldrho, snpid=seq_along(ix),
+                           beta_hat_2, seb2, bzy_pval = p_value2,
+                           ldrho=ldrho, snpid=seq_along(ix),
                            n_ref = 1, nsnps_thresh=1, gwas_thresh=p_val_thresh)))
     if(class(res)=="try-error") return(NULL)
     return(res)
