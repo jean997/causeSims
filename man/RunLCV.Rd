@@ -27,13 +27,12 @@ RunLCV(ell, z.1, z.2, no.blocks = 100, crosstrait.intercept = 1,
 \item{sig.threshold, }{threshold above which to discard chisq statistics for the purpose of estimating
 the LDSC intercept; large-effect SNPs discarded above sig_threshold*mean(z.x^2);}
 
-\item{intercept.12}{covariance between sampling errors for Z1 and Z2, only needed if}
+\item{intercept.12}{covariance between sampling errors for Z1 and Z2, only needed if
+crosstrait_intercept=0 If the 2 GWAS are disjoint, this can be set to zero.}
 
 \item{n1}{sample size for trait 1, only needed if ldsc.intercept=1;}
 
 \item{n2}{sample size for trait 2, only needed if ldsc.intercept=1;}
-
-\item{crosstrait_intercept}{If the 2 GWAS are disjoint, this can be set to zero.}
 }
 \description{
 Main function for running LCV. Obtained from https://github.com/lukejoconnor/LCV

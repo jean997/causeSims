@@ -1,4 +1,13 @@
 
+process_dat_nold <- function(dat){
+  dat <- dat %>%  select(-beta_hat_1, -beta_hat_2, -p_value, -ld_prune) %>%
+    rename(beta_hat_1 = beta_hat_1_nold,
+           beta_hat_2 = beta_hat_2_nold,
+           p_value = p_value_nold) %>%
+    mutate(ld_prune = TRUE)
+  return(dat)
+}
+
 #'@export
 ivw_re_nonome_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
   if(no_ld) dat <- process_dat_nold(dat)
@@ -11,7 +20,7 @@ ivw_re_nonome_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
                                     by = beta_hat_2, byse = seb2,
                                     snps = snp))
   f <- mr_ivw(dat, model="random", weights="delta")
-  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue)
+  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue, est = f@Estimate)
   return(R)
 }
 
@@ -27,7 +36,7 @@ egger_re_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
                             by = beta_hat_2, byse = seb2,
                             snps = snp))
   f <- mr_egger(dat)
-  R <- list(z = f@Estimate/f@StdError.Est, p = f@Pvalue.Est)
+  R <- list(z = f@Estimate/f@StdError.Est, p = f@Pvalue.Est, est = f@Estimate)
   return(R)
 }
 
@@ -43,7 +52,7 @@ wtd_median_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
                             by = beta_hat_2, byse = seb2,
                             snps = snp))
   f <- mr_median(dat)
-  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue)
+  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue, est = f@Estimate)
   return(R)
 }
 
@@ -62,7 +71,7 @@ mbe_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE,
   if(no_NOME) stderror <- "delta"
     else stderror <- "simple"
   f <- mr_mbe(dat, weighting=weighting, stderror=stderror, phi=phi)
-  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue)
+  R <- list(z = f@Estimate/f@StdError, p = f@Pvalue, est = f@Estimate)
   return(R)
 }
 

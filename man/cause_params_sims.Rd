@@ -4,7 +4,8 @@
 \alias{cause_params_sims}
 \title{Estimate CAUSE parameters for simulated data}
 \usage{
-cause_params_sims(dat, null_wt = 10, no_ld = FALSE)
+cause_params_sims(dat, null_wt = 10, no_ld = FALSE,
+  max_candidates = Inf)
 }
 \arguments{
 \item{dat}{A simulated data frame created with sum_stats}
