@@ -1,4 +1,6 @@
 
+#Faster function for sampling form a multivariate normal if you already know the eigen decomposition
+
 mvrnorm_eig1 <- function (n = 1, mu, eS, tol = 1e-06){
     p <- length(mu)
     if (length(eS$values) != p) stop("incompatible arguments")

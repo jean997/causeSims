@@ -25,12 +25,12 @@ cause_sims <- function(dat, param_ests, sigma_g, qalpha=1, qbeta=10,
   return(res)
 }
 
-#'@export
-get_sigma <- function(effect, q){
-    if(is.na(q) | q == -1) return(NA)
-    fct <- function(s, q){
-        abs(q - pnorm(effect, 0, s))}
-
-    o <- optimize(fct, maximum = FALSE, q = q, lower = 0, upper = 40)
-    return(o$minimum)
+#this is a helper function for switching from with ld to no ld data
+process_dat_nold <- function(dat){
+  dat <- dat %>%  select(-beta_hat_1, -beta_hat_2, -p_value, -ld_prune) %>%
+    rename(beta_hat_1 = beta_hat_1_nold,
+           beta_hat_2 = beta_hat_2_nold,
+           p_value = p_value_nold) %>%
+    mutate(ld_prune = TRUE)
+  return(dat)
 }

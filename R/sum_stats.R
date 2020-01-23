@@ -66,11 +66,6 @@ sum_stats <- function(snps, evd_list,
     g1 <- normalmix(pi=c(1-p1, p1),
                     mean=rep(0, 2),
                     sd=c(0, sigma_1))
-    #generate trait 1 effects
-    # sigma_1 = sqrt(h^2/(2*E[p*(1-p)]))
-    #e_snp_var <- with(snps, mean(2*AF*(1-AF)))
-    #sigma_1 <-sqrt( h1/(e_snp_var*neffect1))
-
 
 
     #Trait 2 effects
@@ -150,11 +145,11 @@ sum_stats <- function(snps, evd_list,
 
                     df <- df %>% mutate(ld_prune = case_when(!snp %in% keep ~ FALSE,
                                                                  TRUE ~ TRUE))
-                    #cat(apply(df, 2, class))
+
                     return(df)
                 })
 
     return(dat)
-    #return(dflist)
+
 }
 

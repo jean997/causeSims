@@ -1,4 +1,4 @@
-# This function LD prnes using the correlation matrix rather than the two column table used by the cause function.
+# This function LD prunes using the correlation matrix rather than the two column table used by the cause function.
 # It is useful for simulations
 
 ld_prune_cormat <- function(R, snp_names, p_vals,  p_val_thresh, r2_thresh){

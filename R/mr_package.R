@@ -1,12 +1,4 @@
-
-process_dat_nold <- function(dat){
-  dat <- dat %>%  select(-beta_hat_1, -beta_hat_2, -p_value, -ld_prune) %>%
-    rename(beta_hat_1 = beta_hat_1_nold,
-           beta_hat_2 = beta_hat_2_nold,
-           p_value = p_value_nold) %>%
-    mutate(ld_prune = TRUE)
-  return(dat)
-}
+# These functions all use the Mendelian Randomization package
 
 #'@export
 ivw_re_nonome_MR <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){

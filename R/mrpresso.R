@@ -1,7 +1,8 @@
 
-
-
-
+#'@title Run MR-PRESSO on simulated data
+#'@param dat A simulated data frame created with sum_stats
+#'@param p_val_thresh p-value threshold
+#'@param no_ld Run with the nold data (T/F)
 #'@export
 mrpresso <- function(dat, p_val_thresh=5e-8, no_ld = FALSE){
     if(no_ld) dat <- process_dat_nold(dat)

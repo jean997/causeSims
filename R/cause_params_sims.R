@@ -7,10 +7,8 @@
 #'@export
 cause_params_sims <- function(dat, null_wt = 10, no_ld=FALSE, max_candidates=Inf){
 
-    if(no_ld){
-      dat <- dat %>% select(-beta_hat_1, -beta_hat_2) %>%
-            rename(beta_hat_1 = beta_hat_1_nold, beta_hat_2 = beta_hat_2_nold)
-    }
+
+   if(no_ld) dat <- process_dat_nold(dat)
 
     X <- dat  %>%
          select(snp, beta_hat_1, seb1, beta_hat_2, seb2) %>%
