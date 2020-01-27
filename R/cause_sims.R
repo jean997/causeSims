@@ -34,3 +34,19 @@ process_dat_nold <- function(dat){
     mutate(ld_prune = TRUE)
   return(dat)
 }
+
+28
+
+#'@export
+#'@title Helper function for simulations testing prior on gamma and eta
+#'@param effect
+#'@param q
+#'@description Given an effect and a quantile, q, find the value of sigma_g
+#'such that pnorm(effect, 0, sigma_g) = q
+get_sigma <- function(effect, q){
+  if(is.na(q) | q == -1) return(NA)
+  fct <- function(s, q){
+  abs(q - pnorm(effect, 0, s))}
+  o <- optimize(fct, maximum = FALSE, q = q, lower = 0, upper = 40)
+  return(o$minimum)
+}
