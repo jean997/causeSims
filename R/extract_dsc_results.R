@@ -85,7 +85,7 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
   if(extract_mr){
     mrdf <- dscquery(dsc.outdir=dir,
                    targets=c("simulate", "mr",
-                             "mr.phi", "mr.p",
+                             "mr.phi", "mr.p", "mr.est",
                              "mr.z"),
                    module.output.files = c("simulate", "mr"),
                    return.type="data.frame")
