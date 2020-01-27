@@ -99,7 +99,7 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
   }
 
 
-  if(extrac_lcv){
+  if(extract_lcv){
     lcvdf <- dscquery(dsc.outdir=dir,
          targets=c("simulate",
                    "LCV.p", "LCV.gcp_mean", "LCV.gcp_pse"),
