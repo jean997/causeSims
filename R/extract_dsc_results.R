@@ -44,8 +44,6 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
                   mutate(params = paste0("(", tau, ",", omega, ",", q, ")"))
     res <- list(params = paramdf)
   }
-  #saveRDS(paramdf, file=paste0(lab, "_paramdf.RDS"))
-
 
 
   #cause
@@ -62,8 +60,7 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
                    return.type="data.frame")
 
       causedf <- causedf %>%
-                 full_join(paramdf, ., by=c("DSC", "simulate.output.file")) %>%
-                 mutate(tag = paste0(lab, "_", simulate.output.file))
+                 full_join(paramdf, ., by=c("DSC", "simulate.output.file"))
       res[["cause"]] <- causedf
   }else if(extract_case & sigma_g){
     causedf <- dscquery(dsc.outdir=dir,
@@ -78,8 +75,7 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
                         return.type="data.frame")
 
      causedf <- causedf %>%
-                full_join(paramdf, ., by=c("DSC", "simulate.output.file")) %>%
-                mutate(tag = paste0(lab, "_", simulate.output.file))
+                full_join(paramdf, ., by=c("DSC", "simulate.output.file"))
      res[["cause"]] <- causedf
   }
 
@@ -111,8 +107,7 @@ extract_dsc_results <- function(dir, extract_cause=TRUE, extract_mr = TRUE,
                    return.type="data.frame")
 
     lcvdf <- lcvdf %>%
-             full_join(paramdf, ., by=c("DSC", "simulate.output.file")) %>%
-             mutate(tag = paste0(lab, "_", simulate.output.file))
+             full_join(paramdf, ., by=c("DSC", "simulate.output.file"))
     res[["lcv"]] <- lcvdf
   }
   return(res)
