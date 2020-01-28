@@ -1,4 +1,6 @@
-#nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp.out &
+#nohup dsc --replicate 100 --host config.yml -c 4 mixture1.dsc > mix1.out &
+#
+# These simulations correspond to Supplementary Note Section SN6.3
 DSC:
     define:
       mr: ivw_MR, egger_MR, wm_MR, mbe_MR, mrp, gsmr
@@ -7,7 +9,7 @@ DSC:
          simulate*mr,
          simulate*cause_params*cause
     replicate: 100
-    output: fp
+    output: mix1
 
 
 # Simulate data
@@ -23,13 +25,16 @@ simulate: R(library(causeSims);
                   n1 = n1, n2=n2,
                   h1=h1, h2=h1,
                   neffect1 = neffect1, neffect2 = neffect2,
-                  tau = tau, omega = omega, q = q,
+                  gamma = gamma, eta = eta, q = q,
                   cores = 4, ld_prune_pval_thresh = 0.01,
-                  r2_thresh = 0.1))
+                  r2_thresh = 0.1);
+            tau <- (gamma^2 * h1/h2)*sign(gamma);
+            omega <- (eta^2 * h1/h2)*sign(eta);
+            )
 
-     q: 0.1, 0.2, 0.3, 0.4, 0.5
-     omega: 0.02, 0.05
-     tau: 0
+     q: 0.1, 0.3
+     eta: -0.1, -0.15, -0.2, -0.4, 0.1, 0 
+     gamma: 0.2
      n1: 12000, 40000
      n2: 12000, 40000
      neffect1: 1000

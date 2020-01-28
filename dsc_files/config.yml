@@ -6,23 +6,22 @@ DSC:
             home: /home/jeanm
         queue_type: pbs
         status_check_interval: 120
-        max_running_jobs: 50 
-        max_cores: 20
+        max_running_jobs: 90 
+        max_cores: 40
         max_mem: 57G
         job_template: |
             #!/bin/bash
-            #SBATCH --time=6:00:00
-            #{partition}
-            #{account}
+            #SBATCH --time={walltime}
+            #SBATCH --nodes={nodes}
             #SBATCH --cpus-per-task={cores}
-            #SBATCH --mem-per-cpu={mem//10**9}G
+            #SBATCH --partition=broadwl
+            #SBATCH --account pi-xinhe
+            #SBATCH --mem={mem//10**9}G
             #SBATCH --job-name={job_name}
             #SBATCH --output={cur_dir}/{job_name}.out
             #SBATCH --error={cur_dir}/{job_name}.err
             cd {cur_dir}
             module load R
-        partition: "SBATCH --partition=broadwl"
-        account: "SBATCH --account pi-xinhe"
         submit_cmd: sbatch {job_file}
         submit_cmd_output: "Submitted batch job {job_id}"
         status_cmd: squeue --job {job_id}
@@ -31,26 +30,26 @@ DSC:
 default:
     queue: midway2
     instances_per_job: 30
-    n_cpu: 1
-    mem_per_cpu: 2G
+    nodes_per_job: 1
+    cpus_per_node: 4
+    cpus_per_instance: 1
+    mem_per_instance: 10G
+    time_per_instance: 20m
 
 simulate:
-    instances_per_job: 30
-    n_cpu: 4
-    mem_per_cpu: 10G
+    cpus_per_instance: 4
 
 cause:
-    instances_per_job: 30 
-    n_cpu: 8
-    mem_per_cpu: 5G
+    instances_per_job: 10
+    cpus_per_instance: 4 
+    time_per_instance: 2:00:00
 
 cause_params:
-    instances_per_job: 10
-    n_cpu: 8
-    mem_per_cpu: 5G
+    instances_per_job: 10 
+    cpus_per_instance: 4 
+    time_per_instance: 2:00:00
 
 mr:
     instances_per_job: 40
-    n_cpu: 1
-    mem_per_cpu: 5G
+    time_per_instance: 50m
 

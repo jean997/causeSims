@@ -1,13 +1,13 @@
-#nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp.out &
+#nohup dsc --replicate 100 --host config.yml -c 4 reverse.dsc > rev.out &
 DSC:
     define:
       mr: ivw_MR, egger_MR, wm_MR, mbe_MR, mrp, gsmr
-    run: simulate*data_summ,
-         simulate*LCV,
-         simulate*mr,
-         simulate*cause_params*cause
+    run: simulate*reverse*data_summ,
+         simulate**reverse*LCV,
+         simulate*reverse*mr,
+         simulate*reverse*cause_params*cause
     replicate: 100
-    output: fp
+    output: rev
 
 
 # Simulate data
@@ -27,17 +27,27 @@ simulate: R(library(causeSims);
                   cores = 4, ld_prune_pval_thresh = 0.01,
                   r2_thresh = 0.1))
 
-     q: 0.1, 0.2, 0.3, 0.4, 0.5
-     omega: 0.02, 0.05
-     tau: 0
-     n1: 12000, 40000
-     n2: 12000, 40000
-     neffect1: 1000
+     q: 0
+     omega: 0
+     tau: 0.2
+     n1: 50000
+     n2: 50000
+     neffect1: 250,500,1000
      neffect2: 1000
      h1: 0.25
      h2: 0.25
      $sim_params: c(q = q, omega = omega, tau = tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
      $dat: dat
+
+# This module flips the data so Y becomes M and M becomes Y
+reverse: R(library(causeSims);
+           evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
+           dat_rev <- reverse_data($(dat), evd_list=evd_list, 
+                                   ld_prune_pval_thresh = 0.01, r2_thresh = 0.1)
+           sim_params <- $(sim_params)
+           )
+    $dat: dat_rev
+    $sim_params: sim_params
 
 
 # This module computes some summaries about the data
@@ -143,9 +153,9 @@ mrp: R(library(causeSims);
        )
     thresh: 5e-8
     no_ld: FALSE
+    $est: res$est
     $z: res$z
     $p: res$p
-    $est: res$est
 
 
 # GSMR

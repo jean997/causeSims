@@ -1,11 +1,20 @@
-#These simulations are for supplementary note section 5.2
+#nohup dsc --replicate 100 --host config.yml -c 4 sigma_g.dsc > sg.out &
+#
+#These simulations are for supplementary note section SN2
 
 DSC:
-    run: simulate*gw_sig,
-         simulate*cause_params*cause_sigma_g
+    run: simulate*data_summ,
+         simulate*cause_params*cause
     replicate: 100
     output: sigma_g 
 
+# Simulate data
+# We consider three scnearios
+# a) gamma = tau = q = 0
+# b) gamma = sqrt(0.05), q = 0, eta = 0
+# c) gamma = 0, q = 0.3, eta = sqrt(0.05)
+# We are interested in knowing how the prior on gamma and eta (we use the same prior for both)
+# affects estimation of gamma and eta in each scenario
 simulate: R(library(causeSims);
             snps <- readRDS("data/chr19_snpdata_hm3only.RDS");
             evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
@@ -27,13 +36,12 @@ simulate: R(library(causeSims);
      neffect2: 1000
      h1: 0.25
      h2: 0.25
-     $sim_params: c(qot,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
+     $sim_params: c(q = qot["q"], omega = qot["omega"], tau = qot["tau"],  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
      $dat: dat
 
 
-# Count how many variants are genome-wide significant for M. Also collect parameters,
-# it will be faster to get them from this module than from simulate because the objects are smaller
-gw_sig: R(library(causeSims);
+# This module computes some summaries about the data
+data_summ: R(library(causeSims);
            m_sig_nold <- with($(dat), sum(p_value_nold < thresh ));
            y_sig_nold <- with($(dat), sum(2*pnorm(-abs(beta_hat_2_nold/seb2)) < thresh ));
            m_sig <- with($(dat), sum(p_value < thresh & ld_prune==TRUE));
@@ -62,7 +70,6 @@ gw_sig: R(library(causeSims);
             q.2 <- eta * sqrt(q) * sqrt(h1) / sqrt(h2);
             gcp = (log(q.2^2) - log(q.1^2)) / (log(q.2^2) + log(q.1^2));
           };
-          gcp_mom <- gcp_moments($(dat), h1, h2)
           )
     thresh: 5e-8
     $m_sig: m_sig
@@ -82,15 +89,20 @@ gw_sig: R(library(causeSims);
     $lcv_q1: q.1
     $lcv_q2: q.2
     $lcv_gcp: gcp
-    $lcv_gcp_mom: gcp_mom$gcp
 
+### CAUSE
 cause_params: R(library(causeSims);
                 p1 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
                 )
     null_wt: 10
-    $cause_params_ld: p1
+    $cause_params_ld: p
 
-cause_sigma_g: R(library(causeSims);
+
+# In this module "quant" determines the value of sigma_{gamma eta} (variable name sigma_g) 
+# which defines the prior on gamma and eta. 
+# The prior distributions on gamma and eta are N(0, sigma_g).
+# sigma_g is chosen so that p_prior(gamma < sqrt(0.05)) = quant
+cause: R(library(causeSims);
                  library(cause);
                  effect <- sqrt(0.05);
                  sigma_g <- get_sigma(effect, quant);
@@ -109,11 +121,22 @@ cause_sigma_g: R(library(causeSims);
     quant: 0.51, 0.65, 0.8
     $cause_res: cause_res
     $sigma_g: sigma_g
-    $eta_med_2: eta_med_2
-    $q_med_2: q_med_2
-    $eta_med_3: eta_med_3
-    $gamma_med_3: gamma_med_3
-    $q_med_3: q_med_3
     $z: z
+    $p: p
+    $eta_2_upper: qs[[1]][3,2]
+    $q_2_upper: qs[[1]][3,3]
+    $eta_2_lower: qs[[1]][2,2]
+    $q_2_lower: qs[[1]][2,3]
+    $eta_2_med: qs[[1]][1,2]
+    $q_2_med: qs[[1]][1,3]
+    $eta_3_upper: qs[[2]][3,2]
+    $q_3_upper: qs[[2]][3,3]
+    $gamma_3_upper: qs[[2]][3,1]
+    $eta_3_lower: qs[[2]][2,2]
+    $q_3_lower: qs[[2]][2,3]
+    $gamma_3_lower: qs[[2]][2,1]
+    $eta_3_med: qs[[2]][1,2]
+    $q_3_med: qs[[2]][1,3]
+    $gamma_3_med: qs[[2]][1,1]
 
 
