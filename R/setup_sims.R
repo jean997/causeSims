@@ -28,9 +28,9 @@ setup_sims <- function(){
   download.file(url="https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/config.yml", destfile="config.yml")
 
   #Download Results
-  cat("Downloading Results\n")
-  if(!dir.exists("sim_results/")) system("mkdir sim_results")
-  cat("Results are not available now but will be soon.\n")
+  #cat("Downloading Results\n")
+  #if(!dir.exists("sim_results/")) system("mkdir sim_results")
+  #cat("Results are not available now but will be soon.\n")
   #download.file(url = "https://zenodo.org/record/3350911/files/main_causedf.RDS?download=1", destfile="sim_results/main_causedf.RDS")
   #download.file(url = "https://zenodo.org/record/3350911/files/main_lcvdf.RDS?download=1", destfile="sim_results/main_lcvdf.RDS")
   #download.file(url = "https://zenodo.org/record/3350911/files/main_mrdf.RDS?download=1", destfile="sim_results/main_mrdf.RDS")
