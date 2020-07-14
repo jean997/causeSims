@@ -12,7 +12,7 @@ summarize_dsc_results <- function(causedf, lcvdf, mrdf, direction = c("both", "p
       sgn <- c(-1)
     }
     cause_summ <- causedf %>%
-                    group_by(q, tau, omega,  n1, n2, cause.qbeta) %>%
+                    group_by(q, tau, omega,  n1, n2, cause.qbeta, neffect1) %>%
                     summarize(n_sig = sum(cause.p < p_thresh & sign(cause.gamma_3_med) %in% sgn, na.rm=T),
                               missing = sum(is.na(cause.p)),
                               gamma = first(gamma),
@@ -21,7 +21,7 @@ summarize_dsc_results <- function(causedf, lcvdf, mrdf, direction = c("both", "p
                     select(-cause.qbeta) %>% ungroup()
 
     lcv_summ <- lcvdf %>%
-                    group_by(q, tau, omega,  n1, n2) %>%
+                    group_by(q, tau, omega,  n1, n2, neffect1) %>%
                     summarize(n_sig = sum(LCV.p < p_thresh & LCV.gcp_mean > 0, na.rm=T),
                               missing = sum(is.na(LCV.p)),
                               gamma = first(gamma),
@@ -29,7 +29,7 @@ summarize_dsc_results <- function(causedf, lcvdf, mrdf, direction = c("both", "p
                     mutate(analysis = "lcv_p")   %>% ungroup()
 
     lcv_summ2 <- lcvdf %>%
-                    group_by(q, tau, omega,  n1, n2) %>%
+                    group_by(q, tau, omega,  n1, n2, neffect1) %>%
                     summarize(n_sig = sum(LCV.gcp_mean > gcp_mean_thresh, na.rm=T),
                               missing = sum(is.na(LCV.p)),
                               gamma = first(gamma),
@@ -37,7 +37,7 @@ summarize_dsc_results <- function(causedf, lcvdf, mrdf, direction = c("both", "p
                     mutate(analysis = "lcv_mean") %>% ungroup()
 
     mr_summ <- mrdf %>%
-                    group_by(q, tau, omega,  n1, n2, mr) %>%
+                    group_by(q, tau, omega,  n1, n2, mr, neffect1) %>%
                     summarize(n_sig = sum(mr.p < p_thresh & sign(mr.z) %in% sgn, na.rm=T),
                               missing = sum(is.na(mr.p)),
                               gamma = first(gamma),
@@ -59,20 +59,20 @@ summarize_dsc_results <- function(causedf, lcvdf, mrdf, direction = c("both", "p
 roc_data <- function(causedf, lcvdf, mrdf){
   ###### ROC Curves
   x1 <- causedf %>%
-        mutate(analysis = paste0("cause_", qbeta), stat = -log10(cause.p)) %>%
-        select(tag, q, omega, tau, n1, n2, analysis, stat)
+        mutate(analysis = paste0("cause_", cause.qbeta), stat = -log10(cause.p)) %>%
+        select(simulate.output.file, q, omega, tau, n1, n2, analysis, stat)
 
   x2 <- lcvdf %>%
         mutate(lcv_p = pmax(0, sign(LCV.gcp_mean)*(-log10(LCV.p))),
                lcv_mean = LCV.gcp_mean) %>%
-        select(tag, q, omega, tau, n1, n2, lcv_p, lcv_mean) %>%
-        gather("analysis", "stat", -tag, -q, -omega, -tau, -n1, -n2) %>%
-        select(tag, q, omega, tau, n1, n2, analysis, stat)
+        select(simulate.output.file, q, omega, tau, n1, n2, lcv_p, lcv_mean) %>%
+        gather("analysis", "stat", -simulate.output.file, -q, -omega, -tau, -n1, -n2) %>%
+        select(simulate.output.file, q, omega, tau, n1, n2, analysis, stat)
 
   x3 <- mrdf %>%
         mutate(stat = -log10(mr.p)) %>%
         rename(analysis = mr) %>%
-        select(tag, q, omega, tau, n1, n2, analysis, stat)
+        select(simulate.output.file, q, omega, tau, n1, n2, analysis, stat)
 
   x <- bind_rows(x1, x2, x3)
   return(x)

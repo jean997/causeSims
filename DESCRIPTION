@@ -4,7 +4,7 @@ Title: Generate Summary Statistic Data and Analyze with a Variety of MR Methods
 Version: 0.1.0
 Author: Jean Morrison
 Maintainer: Jean Morrison <jeanm@uchicago.edu>
-Description: This package is built to run simulations described in Morrison et al (2019) (citation TBD). You can use it to generate pairs of summary statistics for testing summary statistic based MR methods.
+Description: This package is built to run simulations described in Morrison et al (2020).
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: false
@@ -23,6 +23,7 @@ Imports:
   future,
   Matrix,
   RcppZiggurat,
-  MRPRESSO,
+  MRPRESSO
+Suggests:
   gsmr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

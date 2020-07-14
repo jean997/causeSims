@@ -3,7 +3,7 @@ DSC:
     define:
       mr: ivw_MR, egger_MR, wm_MR, mbe_MR, mrp, gsmr
     run: simulate*reverse*data_summ,
-         simulate**reverse*LCV,
+         simulate*reverse*LCV,
          simulate*reverse*mr,
          simulate*reverse*cause_params*cause
     replicate: 100
