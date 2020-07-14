@@ -14,10 +14,8 @@ setup_sims <- function(){
   cat("Downloading DSC files\n")
   download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/power.dsc" , destfile="power.dsc")
   download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/false_positives.dsc" , destfile="false_positives.dsc")
-  #download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/sigma_g.dsc" , destfile="sigma_g.dsc")
   download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/reverse.dsc" , destfile="reverse.dsc")
   download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/mixture1.dsc" , destfile="mixture1.dsc")
-  #download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/mixture2.dsc" , destfile="mixture2.dsc")
   #Download data
   if(!dir.exists("data/")) system("mkdir data")
   cat("Downloading LD Data\n")
@@ -28,8 +26,13 @@ setup_sims <- function(){
   download.file(url="https://raw.githubusercontent.com/jean997/causeSims/master/dsc_files/config.yml", destfile="config.yml")
 
   #Download Results
-  #cat("Downloading Results\n")
-  #if(!dir.exists("sim_results/")) system("mkdir sim_results")
+  cat("Downloading Results\n")
+  if(!dir.exists("sim_results/")) system("mkdir sim_results")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/results/res_pwr.RDS" , destfile="sim_results/res_pwr.RDS")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/results/res_fp.RDS" , destfile="sim_results/res_fp.RDS")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/results/res_rev.RDS" , destfile="sim_results/res_rev.RDS")
+  download.file(url = "https://raw.githubusercontent.com/jean997/causeSims/master/results/res_mix1.RDS" , destfile="sim_results/res_mix1.RDS")
+
   #cat("Results are not available now but will be soon.\n")
   #download.file(url = "https://zenodo.org/record/3350911/files/main_causedf.RDS?download=1", destfile="sim_results/main_causedf.RDS")
   #download.file(url = "https://zenodo.org/record/3350911/files/main_lcvdf.RDS?download=1", destfile="sim_results/main_lcvdf.RDS")
