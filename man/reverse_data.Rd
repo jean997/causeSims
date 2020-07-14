@@ -4,8 +4,7 @@
 \alias{reverse_data}
 \title{Reverse a simulated data set}
 \usage{
-reverse_data(dat, evd_list, ld_prune_pval_thresh = 0.001,
-  r2_thresh = 0.1)
+reverse_data(dat, evd_list, ld_prune_pval_thresh = 0.001, r2_thresh = 0.1)
 }
 \arguments{
 \item{dat}{Data set simulated with sum_stats}

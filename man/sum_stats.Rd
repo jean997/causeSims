@@ -4,9 +4,25 @@
 \alias{sum_stats}
 \title{Simulate summary statistics}
 \usage{
-sum_stats(snps, evd_list, n_copies = 30, n1, n2, h1, h2, neffect1,
-  neffect2, gamma, eta, q, tau, omega, cores,
-  ld_prune_pval_thresh = 0.001, r2_thresh = 0.1)
+sum_stats(
+  snps,
+  evd_list,
+  n_copies = 30,
+  n1,
+  n2,
+  h1,
+  h2,
+  neffect1,
+  neffect2,
+  gamma,
+  eta,
+  q,
+  tau,
+  omega,
+  cores,
+  ld_prune_pval_thresh = 0.001,
+  r2_thresh = 0.1
+)
 }
 \arguments{
 \item{snps}{SNP info data frame}

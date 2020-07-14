@@ -4,8 +4,15 @@
 \alias{cause_sims}
 \title{Run CAUSE on simulated data}
 \usage{
-cause_sims(dat, param_ests, sigma_g, qalpha = 1, qbeta = 10,
-  no_ld = FALSE, thresh = 0.001)
+cause_sims(
+  dat,
+  param_ests,
+  sigma_g,
+  qalpha = 1,
+  qbeta = 10,
+  no_ld = FALSE,
+  thresh = 0.001
+)
 }
 \arguments{
 \item{dat}{A simulated data frame created with sum_stats}

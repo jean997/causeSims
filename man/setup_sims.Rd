@@ -11,14 +11,11 @@ A helper function that prepares a working directory for running simulations.
 }
 \details{
 This function prepares a working directory to replicate the simulations presented in Morrison et al 2019
-(https://www.biorxiv.org/content/10.1101/682237v1). After running this function you will be able to execute simulation
+(https://www.biorxiv.org/content/10.1101/682237v3). After running this function you will be able to execute simulation
 experiments using DSC using the commands
 
- nohup dsc --replicate 100 --host config.yml -c 4 power.dsc > pwr.out &
+ nohup dsc --replicate 100 --host config.yml -c 4 [dscfile] > [outputfile] &
 
- nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp.out &
-
- nohup dsc --replicate 100 --host config.yml -c 4 sigma_g.dsc > sg.out &
 
  You will need to modify the config.yml file to work with your compute cluster.
 }

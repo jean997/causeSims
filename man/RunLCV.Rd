@@ -4,10 +4,19 @@
 \alias{RunLCV}
 \title{LCV}
 \usage{
-RunLCV(ell, z.1, z.2, no.blocks = 100, crosstrait.intercept = 1,
-  ldsc.intercept = 1, weights = 1/pmax(1, ell),
-  sig.threshold = .Machine$integer.max, n.1 = 1, n.2 = 1,
-  intercept.12 = 0)
+RunLCV(
+  ell,
+  z.1,
+  z.2,
+  no.blocks = 100,
+  crosstrait.intercept = 1,
+  ldsc.intercept = 1,
+  weights = 1/pmax(1, ell),
+  sig.threshold = .Machine$integer.max,
+  n.1 = 1,
+  n.2 = 1,
+  intercept.12 = 0
+)
 }
 \arguments{
 \item{ell}{Mx1 vector of LD scores;}

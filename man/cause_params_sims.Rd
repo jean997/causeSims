@@ -4,8 +4,7 @@
 \alias{cause_params_sims}
 \title{Estimate CAUSE parameters for simulated data}
 \usage{
-cause_params_sims(dat, null_wt = 10, no_ld = FALSE,
-  max_candidates = Inf)
+cause_params_sims(dat, null_wt = 10, no_ld = FALSE, max_candidates = Inf)
 }
 \arguments{
 \item{dat}{A simulated data frame created with sum_stats}
@@ -13,6 +12,9 @@ cause_params_sims(dat, null_wt = 10, no_ld = FALSE,
 \item{null_wt}{Null weight in dirichlet prior on mixing parameters}
 
 \item{no_ld}{Run with the nold data (T/F)}
+}
+\value{
+
 }
 \description{
 Estimate CAUSE parameters for simulated data

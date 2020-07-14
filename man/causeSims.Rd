@@ -3,11 +3,7 @@
 \docType{package}
 \name{causeSims}
 \alias{causeSims}
-\alias{causeSims-package}
 \title{causeSims}
-\description{
-causeSims
-}
 \author{
 Jean Morrison <jeanm@uchicago.edu>
 }
